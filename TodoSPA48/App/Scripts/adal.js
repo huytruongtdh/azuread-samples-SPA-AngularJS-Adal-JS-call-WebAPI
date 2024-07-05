@@ -162,8 +162,13 @@ AuthenticationContext.prototype.login = function () {
     this._saveItem(this.CONSTANTS.STORAGE.ERROR, '');
     this._saveItem(this.CONSTANTS.STORAGE.ERROR_DESCRIPTION, '');
 
+    var resource = this.config.resource;
+    // OAuth2 Endpoint V2 use scope instead of resource!
+    if (this.config.v2EndpointScope?.trim()) {
+        resource = null;
+    }
 
-    var urlNavigate = this._getNavigateUrl('id_token', null) + '&nonce=' + encodeURIComponent(this._idTokenNonce);
+    var urlNavigate = this._getNavigateUrl(this.config.responseType || 'id_token', resource) + '&nonce=' + encodeURIComponent(this._idTokenNonce);
     this.frameCallInProgress = false;
     this._loginInProgress = true;
     if (this.config.displayCall) {
@@ -644,10 +649,11 @@ AuthenticationContext.prototype.saveTokenFromHash = function (requestInfo) {
                 this._saveItem(this.CONSTANTS.STORAGE.SESSION_STATE, requestInfo.parameters[this.CONSTANTS.SESSION_STATE]);
             }
 
-            var keys, resource;
+            var keys, resource, hasAccessToken = false;
 
             if (requestInfo.parameters.hasOwnProperty(this.CONSTANTS.ACCESS_TOKEN)) {
                 this._logstatus('Fragment has access token');
+                hasAccessToken = true;
                 // default resource
                 this._renewActive = false;
                 resource = this.config.loginResource;
@@ -681,7 +687,9 @@ AuthenticationContext.prototype.saveTokenFromHash = function (requestInfo) {
                             keys = this._getItem(this.CONSTANTS.STORAGE.TOKEN_KEYS) || '';
                             this._saveItem(this.CONSTANTS.STORAGE.TOKEN_KEYS, keys + resource + this.CONSTANTS.RESOURCE_DELIMETER);
                         }
-                        this._saveItem(this.CONSTANTS.STORAGE.ACCESS_TOKEN_KEY + resource, requestInfo.parameters[this.CONSTANTS.ID_TOKEN]);
+                        if (!hasAccessToken) {
+                            this._saveItem(this.CONSTANTS.STORAGE.ACCESS_TOKEN_KEY + resource, requestInfo.parameters[this.CONSTANTS.ID_TOKEN]);
+                        }
                         this._saveItem(this.CONSTANTS.STORAGE.EXPIRATION_KEY + resource, this._user.profile.exp);
                     }
                 }
@@ -760,7 +768,13 @@ AuthenticationContext.prototype._getNavigateUrl = function (responseType, resour
         this.instance = this.config.instance;
     }
 
-    var urlNavigate = this.instance + tenant + '/oauth2/v2.0/authorize' + this._serialize(responseType, this.config, resource) + this._addClientId();
+    if (this.config.v2EndpointScope) {
+
+    }
+    
+    var v2endpointSegment = (this.config.v2EndpointScope || '').trim()  && `v2.0/` || '';
+
+    var urlNavigate = this.instance + tenant + `/oauth2/${v2endpointSegment}authorize` + this._serialize(responseType, this.config, resource) + this._addClientId();
     console.log('Navigate url:' + urlNavigate);
     return urlNavigate;
 };
@@ -862,9 +876,9 @@ AuthenticationContext.prototype._serialize = function (responseType, obj, resour
             str.push(obj.extraQueryParameter);
         }
 
-        //str.push('scope=' + encodeURIComponent('api://3eda60ac-be77-4605-b1cf-82de40e4495c/Data.All openid profile offline_access'));
-        //str.push('scope=' + encodeURIComponent('api://3eda60ac-be77-4605-b1cf-82de40e4495c/.default openid profile offline_access'));
-        str.push('scope=openid');
+        if (obj.v2EndpointScope) {
+            str.push('scope=' + obj.v2EndpointScope);
+        }
     }
 
     return str.join('&');
