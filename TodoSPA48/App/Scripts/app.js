@@ -24,7 +24,6 @@ angular.module('todoApp', ['ngRoute','AdalAngular'])
             //responseType: 'id_token token', // enable if working with the latest version of Azure Appliation Object
 
             // #2 For OAuth2 Authrization Endpoint v2.0 ONLY:
-            //isV2EndpointVersion: true,
             v2EndpointScope: 'openid',
             //cacheLocation: 'localStorage', // enable this for IE, as sessionStorage does not work for localhost.
         },
