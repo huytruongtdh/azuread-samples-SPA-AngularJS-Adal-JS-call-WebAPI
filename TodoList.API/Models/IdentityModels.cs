@@ -18,9 +18,9 @@ namespace TodoList.API.Models
             return userIdentity;
         }
 
-        //public string GivenName { get; set; }
-        //public string Surname { get; set; }
-        //public DateTime? DateOfBirth { get; set; }
+        public string GivenName { get; set; }
+        public string Surname { get; set; }
+        public DateTime? DateOfBirth { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.SqlServer.Utilities;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -66,6 +67,8 @@ namespace TodoList.API.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
                 PhoneNumber = claimsIdentity.FindFirstValue(ClaimTypes.MobilePhone),
+                GivenName = claimsIdentity.FindFirstValue(ClaimTypes.GivenName),
+                Surname = claimsIdentity.FindFirstValue(ClaimTypes.Surname),
             };
         }
 
@@ -268,9 +271,16 @@ namespace TodoList.API.Controllers
                     CookieAuthenticationDefaults.AuthenticationType);
 
                 AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
-                properties.Dictionary.Add("test1", "test2");
+                
+                // copied from Microsoft.Owin.Security.OAuth.InvokeTokenEndpointAsync():
+                DateTimeOffset currentUtc = Startup.OAuthOptions.SystemClock.UtcNow;
+                currentUtc = currentUtc.Subtract(TimeSpan.FromMilliseconds(currentUtc.Millisecond)); // remove milliseconds in case they don't round-trip
+                properties.IssuedUtc = currentUtc;
+                properties.ExpiresUtc = currentUtc.Add(Startup.OAuthOptions.AccessTokenExpireTimeSpan);
 
-                ApplicationOAuthProvider.AddAdditionalClaimsAndProps(oAuthIdentity, user);
+                ApplicationOAuthProvider.AddAdditionalClaims(oAuthIdentity, user);
+
+                AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
 
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
@@ -354,32 +364,35 @@ namespace TodoList.API.Controllers
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             //var info = await Authentication.GetExternalLoginInfoAsync();
             var authResult = await Authentication.AuthenticateAsync(DefaultAuthenticationTypes.ExternalBearer).WithCurrentCulture();
             var info = ExternalLoginData.GetExternalLoginInfo(authResult);
 
             if (info == null)
-            {
                 return InternalServerError();
-            }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = await UserManager.FindByEmailAsync(model.Email);
 
-            IdentityResult result = await UserManager.CreateAsync(user);
-            if (!result.Succeeded)
+            if (user == null)
             {
-                return GetErrorResult(result);
+                user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+                IdentityResult result1 = await UserManager.CreateAsync(user);
+                if (!result1.Succeeded)
+                    return GetErrorResult(result1);
             }
 
-            result = await UserManager.AddLoginAsync(user.Id, info.Login);
+            // email nay da dang ky bang password hoac dang ky tu LoginProvider khac
+            var existingLogins = await UserManager.GetLoginsAsync(user.Id);
+            if (existingLogins.Any(n => n.LoginProvider.Equals(info.Login.LoginProvider)))
+                return Ok();
+
+            IdentityResult result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
-            {
                 return GetErrorResult(result);
-            }
+
             return Ok();
         }
 
@@ -466,6 +479,8 @@ namespace TodoList.API.Controllers
             public string ProviderKey { get; set; }
             public string UserName { get; set; }
             public string Email { get; set; }
+            public string GivenName { get; set; }
+            public string Surname { get; set; }
 
 
             public IList<Claim> GetClaims()
@@ -480,6 +495,12 @@ namespace TodoList.API.Controllers
 
                 if (!string.IsNullOrEmpty(Email))
                     claims.Add(new Claim(ClaimTypes.Email, Email, null, LoginProvider));
+
+                if (!string.IsNullOrEmpty(GivenName))
+                    claims.Add(new Claim(ClaimTypes.GivenName, GivenName, null, LoginProvider));
+
+                if (!string.IsNullOrEmpty(Surname))
+                    claims.Add(new Claim(ClaimTypes.Surname, Surname, null, LoginProvider));
 
                 return claims;
             }
@@ -510,6 +531,8 @@ namespace TodoList.API.Controllers
                     ProviderKey = providerKeyClaim.Value,
                     UserName = identity.FindFirstValue(ClaimTypes.Name),
                     Email = identity.FindFirstValue(ClaimTypes.Email),
+                    GivenName = identity.FindFirstValue(ClaimTypes.GivenName),
+                    Surname = identity.FindFirstValue(ClaimTypes.Surname),
                 };
             }
 

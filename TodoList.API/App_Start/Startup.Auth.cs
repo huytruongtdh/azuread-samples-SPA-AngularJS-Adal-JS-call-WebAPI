@@ -11,6 +11,7 @@ using Owin;
 using TodoList.API.Providers;
 using TodoList.API.Models;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace TodoList.API
 {
@@ -35,7 +36,8 @@ namespace TodoList.API
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
-            PublicClientId = "self";
+            //PublicClientId = "self";
+            PublicClientId = "spa";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
@@ -59,15 +61,15 @@ namespace TodoList.API
             //    consumerSecret: "");
 
             app.UseFacebookAuthentication(
-                //appId: "504334028606335",
-                appId: "735746767188407",
-                //appSecret: "1762119331e12f261870702751ddb176");
-                appSecret: "e6cdaae2c3f5ab70a81580252ae43fd3");
+                appId: "504334028606335",
+                //appId: "735746767188407",
+                appSecret: "1762119331e12f261870702751ddb176");
+            //appSecret: "e6cdaae2c3f5ab70a81580252ae43fd3");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "967294946801-cjcedksq2dsjo7eil53pt1arkvulnr8k.apps.googleusercontent.com",
-                ClientSecret = "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"
+                ClientSecret = "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",
             });
         }
     }

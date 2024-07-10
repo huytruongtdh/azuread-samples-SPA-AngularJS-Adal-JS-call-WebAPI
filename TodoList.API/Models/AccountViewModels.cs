@@ -33,6 +33,8 @@ namespace TodoList.API.Models
 
         public string LoginProvider { get; set; }
         public string PhoneNumber { get; set; }
+        public string GivenName { get; set; }
+        public string Surname { get; set; }
     }
 
     public class UserLoginInfoViewModel

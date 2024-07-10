@@ -47,7 +47,7 @@ namespace TodoList.API.Providers
                 CookieAuthenticationDefaults.AuthenticationType);
 
             AuthenticationProperties properties = CreateProperties(user.UserName);
-            AddAdditionalClaimsAndProps(oAuthIdentity, user);
+            AddAdditionalClaims(oAuthIdentity, user);
 
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
@@ -127,6 +127,10 @@ namespace TodoList.API.Providers
             {
                 Uri expectedRootUri = new Uri(context.Request.Uri, "/");
 
+                if(_publicClientId.Equals("spa"))
+                    expectedRootUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["externalLoginClientCallbackURL"].TrimEnd('/'));
+
+
                 if (expectedRootUri.AbsoluteUri == context.RedirectUri)
                 {
                     context.Validated();
@@ -155,11 +159,12 @@ namespace TodoList.API.Providers
             return new AuthenticationProperties(data);
         }
 
-        public static void AddAdditionalClaimsAndProps(ClaimsIdentity oAuthIdentity, ApplicationUser user)
+        public static void AddAdditionalClaims(ClaimsIdentity oAuthIdentity, ApplicationUser user)
         {
-            AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
-            oAuthIdentity.AddClaim(new Claim(ClaimTypes.MobilePhone, "0123412343"));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.MobilePhone, user.PhoneNumber));
             oAuthIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.GivenName, user.GivenName));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.Surname, user.Surname));
         }
     }
 }
