@@ -45,8 +45,7 @@ namespace TodoList.API
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
-            //PublicClientId = "self";
-            PublicClientId = "spa";
+            PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),

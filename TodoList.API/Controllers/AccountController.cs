@@ -297,7 +297,7 @@ namespace TodoList.API.Controllers
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
         [AllowAnonymous]
         [Route("ExternalLogins")]
-        public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
+        public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false, string clientId = null)
         {
             IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
             List<ExternalLoginViewModel> logins = new List<ExternalLoginViewModel>();
@@ -323,7 +323,7 @@ namespace TodoList.API.Controllers
                     {
                         provider = description.AuthenticationType,
                         response_type = "token",
-                        client_id = Startup.PublicClientId,
+                        client_id = clientId ?? Startup.PublicClientId,
                         redirect_uri = new Uri(Request.RequestUri, returnUrl).AbsoluteUri,
                         state = state
                     }),
@@ -394,36 +394,6 @@ namespace TodoList.API.Controllers
                 return GetErrorResult(result);
 
             return Ok();
-        }
-
-
-        private ExternalLoginInfo GetExternalLoginInfo2(AuthenticateResult result)
-        {
-            if (result == null || result.Identity == null)
-            {
-                return null;
-            }
-
-            Claim claim = result.Identity.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
-            if (claim == null)
-            {
-                return null;
-            }
-
-            string text = result.Identity.Name;
-            if (text != null)
-            {
-                text = text.Replace(" ", "");
-            }
-
-            string email = result.Identity.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
-            return new ExternalLoginInfo
-            {
-                ExternalIdentity = result.Identity,
-                Login = new UserLoginInfo(claim.Issuer, claim.Value),
-                DefaultUserName = text,
-                Email = email
-            };
         }
 
         protected override void Dispose(bool disposing)
