@@ -12,11 +12,20 @@ using TodoList.API.Providers;
 using TodoList.API.Models;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.DataProtection;
+using System.Configuration;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.Owin.Security.Jwt;
 
 namespace TodoList.API
 {
     public partial class Startup
     {
+        private readonly string _authority = $"{ConfigurationManager.AppSettings["ida:AADInstance"]}/{ConfigurationManager.AppSettings["ida:TenantId"]}/v2.0";
+        private readonly string _audience = ConfigurationManager.AppSettings["ida:ClientId"];
+
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public static string PublicClientId { get; private set; }
@@ -71,6 +80,40 @@ namespace TodoList.API
                 ClientId = "967294946801-cjcedksq2dsjo7eil53pt1arkvulnr8k.apps.googleusercontent.com",
                 ClientSecret = "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",
             });
+
+            app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions
+            {
+                AuthenticationMode = Microsoft.Owin.Security.AuthenticationMode.Active,
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidAudience = _audience,
+                    ValidateIssuer = true,
+                    ValidIssuer = _authority,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKeys = GetIssuerSigningKeys(_authority).Result
+                }
+            });
+        }
+
+        private async Task<IEnumerable<SecurityKey>> GetIssuerSigningKeys(string authority)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    var openIdConfigUrl = $"{authority}/.well-known/openid-configuration";
+                    var openIdConfigResponse = await httpClient.GetStringAsync(openIdConfigUrl);
+                    var openIdConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<OpenIdConnectConfiguration>(openIdConfigResponse);
+                    var jsonWebKeySetResponse = await httpClient.GetStringAsync(openIdConfig.JwksUri);
+                    var jsonWebKeySet = new JsonWebKeySet(jsonWebKeySetResponse);
+                    return jsonWebKeySet.GetSigningKeys();
+                }
+                catch (System.Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
     }
 }
