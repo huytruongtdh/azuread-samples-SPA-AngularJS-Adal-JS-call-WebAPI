@@ -16,15 +16,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoSPA48", "TodoSPA48\Todo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.API", "TodoList.API\TodoList.API.csproj", "{A8FAA072-42CD-4F29-AF38-A7B5DD59D9BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.Google", "C:\Users\ADMIN\Downloads\new dll decom\Microsoft.Owin.Security.Google\Microsoft.Owin.Security.Google.csproj", "{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.Identity.Core", "Microsoft\Microsoft.AspNet.Identity.Core\Microsoft.AspNet.Identity.Core.csproj", "{8A8C020D-C536-426D-B2AD-57EC2F167CF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.OAuth", "C:\Users\ADMIN\Downloads\new dll decom\Microsoft.Owin.Security.OAuth\Microsoft.Owin.Security.OAuth.csproj", "{890397EB-A745-4729-847F-171A9F04B3B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.Identity.EntityFramework", "Microsoft\Microsoft.AspNet.Identity.EntityFramework\Microsoft.AspNet.Identity.EntityFramework.csproj", "{75A90A8E-5990-449F-A43B-5A92D475F359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.Identity.Owin", "C:\Users\ADMIN\Downloads\new dll decom\Microsoft.AspNet.Identity.Owin\Microsoft.AspNet.Identity.Owin.csproj", "{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.Identity.Owin", "Microsoft\Microsoft.AspNet.Identity.Owin\Microsoft.AspNet.Identity.Owin.csproj", "{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.Identity.Core", "C:\Users\ADMIN\Downloads\new dll decom\Microsoft.AspNet.Identity.Core\Microsoft.AspNet.Identity.Core.csproj", "{8A8C020D-C536-426D-B2AD-57EC2F167CF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.Google", "Microsoft\Microsoft.Owin.Security.Google\Microsoft.Owin.Security.Google.csproj", "{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.Identity.EntityFramework", "C:\Users\ADMIN\Downloads\new dll decom\Microsoft.AspNet.Identity.EntityFramework\Microsoft.AspNet.Identity.EntityFramework.csproj", "{75A90A8E-5990-449F-A43B-5A92D475F359}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.Jwt", "Microsoft\Microsoft.Owin.Security.Jwt\Microsoft.Owin.Security.Jwt.csproj", "{BAD251B0-9656-443A-97E8-D582E186A989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Owin.Security.OAuth", "Microsoft\Microsoft.Owin.Security.OAuth\Microsoft.Owin.Security.OAuth.csproj", "{890397EB-A745-4729-847F-171A9F04B3B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,18 +46,6 @@ Global
 		{A8FAA072-42CD-4F29-AF38-A7B5DD59D9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8FAA072-42CD-4F29-AF38-A7B5DD59D9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8FAA072-42CD-4F29-AF38-A7B5DD59D9BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{890397EB-A745-4729-847F-171A9F04B3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{890397EB-A745-4729-847F-171A9F04B3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{890397EB-A745-4729-847F-171A9F04B3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{890397EB-A745-4729-847F-171A9F04B3B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8A8C020D-C536-426D-B2AD-57EC2F167CF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A8C020D-C536-426D-B2AD-57EC2F167CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A8C020D-C536-426D-B2AD-57EC2F167CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -64,6 +54,22 @@ Global
 		{75A90A8E-5990-449F-A43B-5A92D475F359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75A90A8E-5990-449F-A43B-5A92D475F359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75A90A8E-5990-449F-A43B-5A92D475F359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79AF8543-148C-4FD7-BBBB-BCCFF296DD62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F25879A6-7FC3-43A1-A3F7-CD7604F0A3F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD251B0-9656-443A-97E8-D582E186A989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD251B0-9656-443A-97E8-D582E186A989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD251B0-9656-443A-97E8-D582E186A989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD251B0-9656-443A-97E8-D582E186A989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890397EB-A745-4729-847F-171A9F04B3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890397EB-A745-4729-847F-171A9F04B3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890397EB-A745-4729-847F-171A9F04B3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890397EB-A745-4729-847F-171A9F04B3B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

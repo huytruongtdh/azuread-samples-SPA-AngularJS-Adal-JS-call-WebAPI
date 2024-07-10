@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: D:\My Workspaces\TEST DLL\Microsoft.AspNet.Identity.Core.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8A8C020D-C536-426D-B2AD-57EC2F167CF5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Microsoft.AspNet.Identity.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ApplicationVersion>2.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Microsoft.AspNet.Identity</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IIdentityMessageServiceExtensions.cs" />
+    <Compile Include="TaskExtensions.cs" />
+    <Compile Include="AsyncHelper.cs" />
+    <Compile Include="IIdentityMessageService.cs" />
+    <Compile Include="IdentityMessage.cs" />
+    <Compile Include="IUserTokenProvider`2.cs" />
+    <Compile Include="IUserPhoneNumberStore`1.cs" />
+    <Compile Include="IUserPhoneNumberStore`2.cs" />
+    <Compile Include="IUserLockoutStore`2.cs" />
+    <Compile Include="IUserTwoFactorStore`2.cs" />
+    <Compile Include="IUserEmailStore`1.cs" />
+    <Compile Include="IUserEmailStore`2.cs" />
+    <Compile Include="IQueryableRoleStore`1.cs" />
+    <Compile Include="IQueryableRoleStore`2.cs" />
+    <Compile Include="IQueryableUserStore`1.cs" />
+    <Compile Include="IQueryableUserStore`2.cs" />
+    <Compile Include="IUserSecurityStampStore`1.cs" />
+    <Compile Include="IUserSecurityStampStore`2.cs" />
+    <Compile Include="IClaimsIdentityFactory`2.cs" />
+    <Compile Include="IClaimsIdentityFactory`1.cs" />
+    <Compile Include="RoleManagerExtensions.cs" />
+    <Compile Include="IUserPasswordStore`1.cs" />
+    <Compile Include="IUserPasswordStore`2.cs" />
+    <Compile Include="PasswordValidator.cs" />
+    <Compile Include="PasswordVerificationResult.cs" />
+    <Compile Include="EmailTokenProvider`1.cs" />
+    <Compile Include="EmailTokenProvider`2.cs" />
+    <Compile Include="PhoneNumberTokenProvider`1.cs" />
+    <Compile Include="PhoneNumberTokenProvider`2.cs" />
+    <Compile Include="TotpSecurityStampBasedTokenProvider`2.cs" />
+    <Compile Include="SecurityToken.cs" />
+    <Compile Include="Rfc6238AuthenticationService.cs" />
+    <Compile Include="RoleValidator`1.cs" />
+    <Compile Include="RoleValidator`2.cs" />
+    <Compile Include="IRoleStore`1.cs" />
+    <Compile Include="IRoleStore`2.cs" />
+    <Compile Include="RoleManager`1.cs" />
+    <Compile Include="RoleManager`2.cs" />
+    <Compile Include="IUserRoleStore`1.cs" />
+    <Compile Include="IUserRoleStore`2.cs" />
+    <Compile Include="DefaultAuthenticationTypes.cs" />
+    <Compile Include="IdentityExtensions.cs" />
+    <Compile Include="UserManagerExtensions.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ClaimsIdentityFactory`1.cs" />
+    <Compile Include="ClaimsIdentityFactory`2.cs" />
+    <Compile Include="Crypto.cs" />
+    <Compile Include="IUserClaimStore`1.cs" />
+    <Compile Include="IUserClaimStore`2.cs" />
+    <Compile Include="IUserLoginStore`1.cs" />
+    <Compile Include="IUserLoginStore`2.cs" />
+    <Compile Include="IPasswordHasher.cs" />
+    <Compile Include="IUserStore`1.cs" />
+    <Compile Include="IUserStore`2.cs" />
+    <Compile Include="PasswordHasher.cs" />
+    <Compile Include="MinimumLengthValidator.cs" />
+    <Compile Include="Resources.cs" />
+    <Compile Include="IdentityResult.cs" />
+    <Compile Include="IRole.cs" />
+    <Compile Include="IRole`1.cs" />
+    <Compile Include="IIdentityValidator`1.cs" />
+    <Compile Include="UserLoginInfo.cs" />
+    <Compile Include="IUser.cs" />
+    <Compile Include="IUser`1.cs" />
+    <Compile Include="UserManager`1.cs" />
+    <Compile Include="UserManager`2.cs" />
+    <Compile Include="UserValidator`1.cs" />
+    <Compile Include="UserValidator`2.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
